@@ -13,7 +13,16 @@ populate_and_list_files () {
 }
 
 read_user_session_choice () {
-  read  -n 1 -p "Choose a session: " chosen_session_idx
+  while :; do
+    read  -n 1 -p "Choose a session: " chosen_session_idx
+
+    if ((chosen_session_idx >= 1 && chosen_session_idx <= ${#files[@]})); then
+      break
+    else
+      echo -e "\nPlease select a valid option."
+    fi
+  done
+
   chosen_session_file="${files[chosen_session_idx-1]}"
   echo -e "\n$(basename "$chosen_session_file") was chosen!"
 }
